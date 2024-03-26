@@ -132,7 +132,7 @@ uint16_t sizeof_float, sizeof_double;
 
 static void H_K_R_Adjustment(KalmanFilter_t *kf);
 
-void Kalman_Filter_Init(KalmanFilter_t *kf, uint8_t xhatSize, uint8_t uSize, uint8_t zSize)
+void Kalman_Filter_Init(KalmanFilter_t *kf, uint8_t xhatSize, uint8_t uSize, uint8_t zSize,float *Q,float *R,float *P,float *K)
 {
     sizeof_float = sizeof(float);
     sizeof_double = sizeof(double);
@@ -187,10 +187,14 @@ void Kalman_Filter_Init(KalmanFilter_t *kf, uint8_t xhatSize, uint8_t uSize, uin
     Matrix_Init(&kf->z, kf->zSize, 1, (float *)kf->z_data);
 
     // covariance matrix P(k|k)
-    kf->P_data = (float *)user_malloc(sizeof_float * xhatSize * xhatSize);
-    memset(kf->P_data, 0, sizeof_float * xhatSize * xhatSize);
-    Matrix_Init(&kf->P, kf->xhatSize, kf->xhatSize, (float *)kf->P_data);
-
+		if(P!=NULL)
+				Matrix_Init(&kf->P, kf->xhatSize, kf->xhatSize,P);
+		else
+		{
+				kf->P_data = (float *)user_malloc(sizeof_float * xhatSize * xhatSize);
+				memset(kf->P_data, 0, sizeof_float * xhatSize * xhatSize);
+				Matrix_Init(&kf->P, kf->xhatSize, kf->xhatSize, (float *)kf->P_data);
+		}
     //create covariance matrix P(k|k-1)
     kf->Pminus_data = (float *)user_malloc(sizeof_float * xhatSize * xhatSize);
     memset(kf->Pminus_data, 0, sizeof_float * xhatSize * xhatSize);
@@ -221,20 +225,32 @@ void Kalman_Filter_Init(KalmanFilter_t *kf, uint8_t xhatSize, uint8_t uSize, uin
     Matrix_Init(&kf->HT, kf->xhatSize, kf->zSize, (float *)kf->HT_data);
 
     // process noise covariance matrix Q
-    kf->Q_data = (float *)user_malloc(sizeof_float * xhatSize * xhatSize);
-    memset(kf->Q_data, 0, sizeof_float * xhatSize * xhatSize);
-    Matrix_Init(&kf->Q, kf->xhatSize, kf->xhatSize, (float *)kf->Q_data);
-
+		if(Q!=NULL)
+				Matrix_Init(&kf->Q, kf->xhatSize, kf->xhatSize,Q);
+		else
+		{
+				kf->Q_data = (float *)user_malloc(sizeof_float * xhatSize * xhatSize);
+				memset(kf->Q_data, 0, sizeof_float * xhatSize * xhatSize);
+				Matrix_Init(&kf->Q, kf->xhatSize, kf->xhatSize, (float *)kf->Q_data);
+		}
     // measurement noise covariance matrix R
-    kf->R_data = (float *)user_malloc(sizeof_float * zSize * zSize);
-    memset(kf->R_data, 0, sizeof_float * zSize * zSize);
-    Matrix_Init(&kf->R, kf->zSize, kf->zSize, (float *)kf->R_data);
-
+		if(R!=NULL)
+				Matrix_Init(&kf->R, kf->zSize, kf->zSize,R);
+		else
+		{
+				kf->R_data = (float *)user_malloc(sizeof_float * zSize * zSize);
+				memset(kf->R_data, 0, sizeof_float * zSize * zSize);
+				Matrix_Init(&kf->R, kf->zSize, kf->zSize, (float *)kf->R_data);
+		}
     // kalman gain K
-    kf->K_data = (float *)user_malloc(sizeof_float * xhatSize * zSize);
-    memset(kf->K_data, 0, sizeof_float * xhatSize * zSize);
-    Matrix_Init(&kf->K, kf->xhatSize, kf->zSize, (float *)kf->K_data);
-
+		if(K!=NULL)
+				Matrix_Init(&kf->K, kf->xhatSize, kf->zSize,K);
+		else
+		{
+				kf->K_data = (float *)user_malloc(sizeof_float * xhatSize * zSize);
+				memset(kf->K_data, 0, sizeof_float * xhatSize * zSize);
+				Matrix_Init(&kf->K, kf->xhatSize, kf->zSize, (float *)kf->K_data);
+		}
     kf->S_data = (float *)user_malloc(sizeof_float * kf->xhatSize * kf->xhatSize);
     kf->temp_matrix_data = (float *)user_malloc(sizeof_float * kf->xhatSize * kf->xhatSize);
     kf->temp_matrix_data1 = (float *)user_malloc(sizeof_float * kf->xhatSize * kf->xhatSize);

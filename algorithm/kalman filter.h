@@ -15,12 +15,14 @@
 
 #include <math.h>
 #include <stdlib.h>
-#include "stm32h7xx.h"
+#include "stm32h723xx.h"
 #include "arm_math.h"
 
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
+
+//#define _CMSIS_OS_H
 
 #ifdef _CMSIS_OS_H
 #define user_malloc pvPortMalloc
@@ -93,7 +95,7 @@ typedef struct kf_t
     float *S_data, *temp_matrix_data, *temp_matrix_data1, *temp_vector_data, *temp_vector_data1;
 } KalmanFilter_t;
 extern uint16_t sizeof_float, sizeof_double;
-void Kalman_Filter_Init(KalmanFilter_t *kf, uint8_t xhatSize, uint8_t uSize, uint8_t zSize);
-float *Kalman_Filter_Update(KalmanFilter_t *kf);
+extern void Kalman_Filter_Init(KalmanFilter_t *kf, uint8_t xhatSize, uint8_t uSize, uint8_t zSize,float *Q,float *R,float *P,float *K);
+extern float *Kalman_Filter_Update(KalmanFilter_t *kf);
 
 #endif //__KALMAN_FILTER_H

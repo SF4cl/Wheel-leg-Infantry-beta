@@ -4,12 +4,15 @@
 #define printf(...)  HAL_UART_Transmit_DMA(&huart1,\
 																				(uint8_t  *)u1_buf,\
 																				sprintf((char*)u1_buf,__VA_ARGS__))
-uint8_t u1_buf[28];
+uint8_t u1_buf[29] __attribute__((section(".ARM.__at_0x24000320")));
 
-float LEG_KP	=																			600.0f;
+float LEG_KP	=																			1200.0f;
 float LEG_KI	=																			0.25f;
 float LEG_KD	=																			7500.0f;
-
+float ROLL_KP	=																			0.25f;
+float ROLL_KI	=																			0.0025f;
+float ROLL_KD	=																			0.003f;
+																				
 float LEG_KP_DOWN	=																			1000.0f;
 float LEG_KI_DOWN	=																			0.0f;
 float LEG_KD_DOWN	=																			10000.0f;
@@ -58,46 +61,46 @@ float Control_Kp[6][2][4]={
 60.986917,-63.118414,23.947251,-0.781886
 };
 float Control_K_extern[10][4][4]={
--42.134342,59.499891,-55.419498,-0.243919,
-280.233913,-254.464219,116.777321,1.993862,
--67.675611,85.913513,-34.143931,-1.060749,
-150.386335,-104.828288,-31.712304,3.481148,
-5.242522,-5.668194,-1.295997,-0.194707,
--5.963153,7.723613,1.544736,0.628221,
-3.340927,-0.770226,-0.981913,-0.119316,
-10.533964,-12.452006,-0.252113,0.073680,
--67.675611,85.913513,-34.143931,-1.060749,
-150.386335,-104.828288,-31.712304,3.481148,
--42.134342,59.499891,-55.419498,-0.243919,
-280.233913,-254.464219,116.777321,1.993862,
-3.340927,-0.770226,-0.981913,-0.119316,
-10.533964,-12.452006,-0.252113,0.073680,
-5.242522,-5.668194,-1.295997,-0.194707,
--5.963153,7.723613,1.544736,0.628221,
--16.083487,21.913165,-10.567396,-0.646567,
-34.097723,-11.433913,-9.815009,5.765981,
--16.083487,21.913165,-10.567396,-0.646567,
-34.097723,-11.433913,-9.815009,5.765981,
--13.965478,22.797658,-12.648669,-1.117601,
-33.581021,-6.059528,-15.224188,7.839894,
--13.965478,22.797658,-12.648669,-1.117601,
-33.581021,-6.059528,-15.224188,7.839894,
--48.918892,55.436888,-30.762161,13.479769,
-345.489948,-332.003710,124.307213,6.032951,
-48.918892,-55.436888,30.762161,-13.479769,
--345.489948,332.003710,-124.307213,-6.032951,
--9.688042,10.765206,-6.953907,2.404674,
-65.899690,-64.024716,27.147092,1.488926,
-9.688042,-10.765206,6.953907,-2.404674,
--65.899690,64.024716,-27.147092,-1.488926,
-73.985237,-23.533097,-22.675833,13.065934,
-185.520384,-250.438856,120.073043,7.029404,
-73.985237,-23.533097,-22.675833,13.065934,
-185.520384,-250.438856,120.073043,7.029404,
--5.428116,8.450531,-5.730121,2.069884,
-38.236838,-43.846426,18.798900,-0.790773,
--5.428116,8.450531,-5.730121,2.069884,
-38.236838,-43.846426,18.798900,-0.790773
+-91.810700,97.152739,-67.227130,-1.714506,
+179.956346,-150.313934,97.519631,3.558502,
+-95.140145,109.912337,-51.046381,-2.225587,
+98.119010,-59.507741,-59.815413,5.780475,
+5.617316,-6.717140,-1.096274,-0.417132,
+-14.960887,19.064421,-1.726242,1.060605,
+6.624465,-4.247575,-0.902625,-0.273616,
+8.131757,-12.335039,-0.872065,0.022717,
+-95.140145,109.912337,-51.046381,-2.225587,
+98.119010,-59.507741,-59.815413,5.780475,
+-91.810700,97.152739,-67.227130,-1.714506,
+179.956346,-150.313934,97.519631,3.558502,
+6.624465,-4.247575,-0.902625,-0.273616,
+8.131757,-12.335039,-0.872065,0.022717,
+5.617316,-6.717140,-1.096274,-0.417132,
+-14.960887,19.064421,-1.726242,1.060605,
+-64.364099,66.779623,-25.292883,-4.133859,
+-31.288082,69.432380,-48.215991,14.335479,
+-64.364099,66.779623,-25.292883,-4.133859,
+-31.288082,69.432380,-48.215991,14.335479,
+-25.734317,32.239707,-15.758358,-4.485949,
+-59.863920,85.981660,-48.074542,12.868700,
+-25.734317,32.239707,-15.758358,-4.485949,
+-59.863920,85.981660,-48.074542,12.868700,
+-20.015419,18.075237,-8.523384,11.063192,
+127.539503,-116.014416,45.424926,4.849524,
+20.015419,-18.075237,8.523384,-11.063192,
+-127.539503,116.014416,-45.424926,-4.849524,
+-14.940592,13.393391,-6.618381,8.022968,
+95.103368,-86.906617,35.779035,3.645579,
+14.940592,-13.393391,6.618381,-8.022968,
+-95.103368,86.906617,-35.779035,-3.645579,
+-54.898798,114.597884,-77.829800,22.964571,
+416.172989,-430.513188,162.581585,25.896337,
+-54.898798,114.597884,-77.829800,22.964571,
+416.172989,-430.513188,162.581585,25.896337,
+-33.043265,39.881187,-19.729456,5.143161,
+105.829692,-104.660025,37.796751,2.476416,
+-33.043265,39.881187,-19.729456,5.143161,
+105.829692,-104.660025,37.796751,2.476416
 };
 /*
 0.814631,17.776696,-49.716597,0.451368,
@@ -197,7 +200,7 @@ fp32 T,Tp_left,Tp_right,N,P,Nm,Pm,R,g,L,Lm,l,mw,mp,M,Iw,Ip,Im;
 fp32 l1,l2,W,u1,u4,du1,du4;
 fp32 lt,xt_right,xt_left,lt_left,lt_right,dxt_left,dxt_right;
 fp32 Kp_th=-80000,Kp_dth=-8000,Kp_x=-0.075,Kp_v=-0.05,Kp_ya=-9,Kp_ys=-4.5,kp_stop=5000,k0=0,d0=0,kl=0.0;
-
+fp32 eVec[2];
 uint8_t last_state=0;
 	 
 first_order_filter_type_t angle_filter,speed_filter,lright_filter,lleft_filter,dlleft_filter,Fleft_filter,dlright_filter,Fright_filter;
@@ -205,12 +208,12 @@ first_order_filter_type_t aleft_filter,aright_filter,daleft_filter,daright_filte
 first_order_filter_type_t u1_right_filter,u4_right_filter,u1_left_filter,u4_left_filter;
 first_order_filter_type_t du1_right_filter,du4_right_filter,du1_left_filter,du4_left_filter;
 first_order_filter_type_t xleft_filter,xright_filter,dxleft_filter,dxright_filter;
-fp32 paramater0[1]={0.00};	
-fp32 paramater1[1]={0.002};	 
+fp32 paramater0[1]={0.002};	
+fp32 paramater1[1]={0.005};	 
 fp32 paramater2[1]={0.00};	
-fp32 paramater3[1]={0.06};	 
-fp32 paramater4[1]={0.01};	 
-fp32 paramater5[1]={0.02};
+fp32 paramater3[1]={0.00};	 
+fp32 paramater4[1]={0.000};	 
+fp32 paramater5[1]={0.1};
 fp32 paramater6[1]={0.0};	
 first_order_filter_type_t vxt_filter;
 uint8_t jump_state=0,chassis_state=0;
@@ -222,7 +225,7 @@ pid_type_def leg_pid_left,leg_pid_right;
 
 fp32 follow_PID[3]={FOLLOW_KP,FOLLOW_KI,FOLLOW_KD};
 fp32 turn_PID[3]={TURN_KP,TURN_KI,TURN_KD};
-fp32 roll_PID[3]={ROLL_KP,ROLL_KI,ROLL_KD};
+//fp32 roll_PID[3]={ROLL_KP,ROLL_KI,ROLL_KD};
 //fp32 leg_PID[3]={LEG_KP,LEG_KI,LEG_KD};
 
 fp32 Pout,Dout;
@@ -248,6 +251,11 @@ float Sqrt(float x)
 		x_in=x;
 		arm_sqrt_f32(x_in,&y_out);
 		return y_out;
+}
+float Transform(float x)
+{
+		if(x>0)	return Sqrt(0.5f*x);
+		return Sqrt(0.5f*-x);
 }
 float a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,au,result;
 float calculate_expression(float u1, float u4, float du1, float du4, float pitch_dot) 
@@ -326,7 +334,8 @@ void Calculate_Init()
 		
 		PID_init(&follow_pid,PID_POSITION,follow_PID,300,100);
 		PID_init(&turn_pid,PID_POSITION,turn_PID,30000,5000);
-		PID_init(&roll_pid,PID_POSITION,roll_PID,1,0);
+		
+		Height_KF_Init();
 		//PID_init(&leg_pid_left,PID_POSITION,leg_PID,320,60);
 		//PID_init(&leg_pid_right,PID_POSITION,leg_PID,320,60);
 		
@@ -366,21 +375,20 @@ float FALLOW_angle=FALLOW_ANGLE,debug=0.5f;
 float Leg_Force;
 int ct=0,init_time;
 
-float lt0=0.16f,i_rollangle=0;
+float lt0=0.18f,i_rollangle=0;
 float Time=0,ticking=0;
 int mo=0;
 int stand_flag=-1;
 int change_flag=0,tic=1;
-float last_dx_left,last_dx_right;
+float last_dx_left,last_dx_right,at;
 void ChassisStateUpdate()
 {
-		Imu.YawAngle=INS_angle[0]/3.14159f*180.0f;	
-		Imu.PitchAngle=90.0f-INS_angle[2]/3.14159f*180.0f;
-		Imu.RollAngle=INS_angle[1]/3.14159f*180.0f-3.8f;
+		Imu.YawAngle=QEKF_INS.Yaw;	
+		Imu.PitchAngle=QEKF_INS.Pitch;
+		Imu.RollAngle=QEKF_INS.Roll;
 		Imu.YawSpeed=-GyroCorrected[2]/3.14159f*180.0f;	
 		Imu.PitchSpeed=GyroCorrected[1]/3.14159f*180.0f;
 		Imu.RollSpeed=-GyroCorrected[0]/3.14159f*180.0f;		
-		
 	
 		first_order_filter_cali(&angle_filter,-Imu.PitchAngle);
 		first_order_filter_cali(&speed_filter,-Imu.PitchSpeed);	
@@ -427,15 +435,23 @@ void ChassisStateUpdate()
 		v=(dx_left+dx_right)/2.0f;
 		first_order_filter_cali(&x_filter,x);
 		first_order_filter_cali(&dx_filter,v);	
+
+		
+		eVec[0] = Height_KF.FilteredValue[0];
+		eVec[1] = Height_KF.FilteredValue[1];
+
+		at+=eVec[0]*0.001f;
 		//v_left=dx_left+calculate_expression(u1_left,u4_left,du1_left,du4_left,0);
-		//v_right=dx_right+calculate_expression(u1_right,u4_right,du1_right,du4_right,0);		
+		//v_right=dx_right+calculate_expression(u1_right,u4_right,du1_right,du4_right,0);	
+		SCB_InvalidateDCache_by_Addr(u1_buf,sizeof(u1_buf));		
 		if(tic==1)
-			printf("%f,%f,%d;\n",last_dx_left,xleft_filter.out,LeftFootMotorMeasure.given_current);
+			printf("%lf,%lf,%lf\r\n",(dx_left+dx_right)/2.0f,eVec[1],accel_filter.out);
+			//printf("%lf\r\n",-Eaccel[1]);
 		last_dx_left=xleft_filter.out;
 		last_dx_right=xright_filter.out;		
 		tic=(tic+1)%4;
 }
-
+uint32_t cou_time=0;
 void ChassisModeUpdate()
 {
 		count_time[5]++;
@@ -462,8 +478,10 @@ void ChassisModeUpdate()
 				default:
 						break;
 		}	
+		if((Chassis.Mode==FALLOW||Chassis.Mode==STOP)&&last_state==ROTING&&((follow_angle-YawMotorMeasure.angle)>90.0f||(follow_angle-YawMotorMeasure.angle)<-90.0f))
+				Chassis.Mode=ROTING;
 //		if(rc_ctrl.rc.s[0]==1)
-//				if(rc_ctrl.rc.ch[4]!=660)
+//				if(rc_ctrl.rc.ch[4]!=660)0
 //						Chassis.Mode = FALLOW;
 //				else
 //						Chassis.Mode = JUMP;
@@ -477,10 +495,17 @@ void ChassisModeUpdate()
 				ticking+=0.0314*3;
 		else
 				ticking=0;
-		if(Chassis.Mode==NOFORCE||total_time[0]<=500||total_time[1]<=500)
+		if(Chassis.Mode==NOFORCE||total_time[0]<=500||total_time[1]<=500||cou_time!=0)
 		{		
 				joint_motor_set_mode(mo);  
 				chassis_state=0;
+				if(last_state!=NOFORCE)
+				{
+						Height_KF_Init();
+						cou_time=1000;
+				}
+				if(cou_time>=1)
+						cou_time--;
 				//x_left=0;
 				//x_right=0;
 				//xt_left=0;
@@ -489,7 +514,7 @@ void ChassisModeUpdate()
 		else
 		{
 				joint_motor_set_mode(10);  
-				if(last_state==NOFORCE||last_state==HIGHSPEED&&Chassis.Mode!=HIGHSPEED||total_time[4]<100)
+				if(last_state==NOFORCE||last_state==HIGHSPEED&&Chassis.Mode!=HIGHSPEED||total_time[4]<10)
 				{
 						chassis_state=1;
 						init_time=0;
@@ -555,6 +580,7 @@ void ChassisModeUpdate()
 						chassis_state=3;
 						init_time=0;
 				}
+				
 //				if(chassis_state==7&&init_time>300)
 //				{
 //						chassis_state=3;
@@ -573,22 +599,22 @@ void ChassisModeUpdate()
 		if(Chassis.Mode!=STOP)
 		{
 				first_order_filter_cali(&xt_filter,xt_filter.out-PTZ.FBSpeed/32767.0f*2.1f*0.1f);	
-				first_order_filter_cali(&vxt_filter,-PTZ.FBSpeed/3267.0f*2.1f*0.1f);	
+				first_order_filter_cali(&vxt_filter,-PTZ.FBSpeed/32767.0f*2.0f);	
 		}
 		else
 		{
 				first_order_filter_cali(&xt_filter,xt_filter.out+PTZ.LRSpeed/32767.0f*2.1f*0.1f);	
-				first_order_filter_cali(&vxt_filter,PTZ.FBSpeed/32767.0f*2.1f*0.1f);	
+				first_order_filter_cali(&vxt_filter,PTZ.LRSpeed/32767.0f*2.0f);	
 		}
 		if(PTZ.FBSpeed!=0)
 		{
-				Chassis.vx+=vxt_filter.out/1500.0f;
+				Chassis.vx+=vxt_filter.out/1000.0f;
 				if(Chassis.vx>1.8f)	Chassis.vx=1.8f;
 				if(Chassis.vx<-1.8f)	Chassis.vx=-1.8f;			
 		}
 		else
-				Chassis.vx*=0.98f;
-		Chassis.wz=-rc_ctrl.rc.ch[2]/660.0f*10.0f;
+				Chassis.vx*=0.95f;
+		//Chassis.wz=-rc_ctrl.rc.ch[2]/660.0f*10.0f;
 		//xt_left=xt_filter.out
 		//xt=(xt_left+xt_right)/2.0f-PTZ.FBSpeed/32767.0f*2.15f*0.00125f;
 		//Chassis.vx=TD_calc(&remote_td,xt_filter.out);
@@ -633,6 +659,7 @@ void Calculate_LQR()
 				T_right2=0;			
 				i_l0_right=70;
 				i_l0_left=70;			
+				i_rollangle=0;
 		}
 		if(chassis_state==1)
 		{
@@ -643,6 +670,7 @@ void Calculate_LQR()
 				I_right=-kp_stop*(dx_right);
 				I_left=kp_stop*(dx_left);		
 				init_time++;			
+
 		}
 		if(chassis_state==2)
 		{
@@ -672,38 +700,44 @@ void Calculate_LQR()
 				if(chassis_state>4)
 						init_time++;
 				if(chassis_state==3||chassis_state==7)
-						lt=lt0+arm_sin_f32(ticking)*0.045;//+rc_ctrl.rc.ch[4]*0.1f/660.0f;//+0.045f+stand_flag*0.045f;-fabs(Imu.PitchAngle)/600.0f;
+						lt=lt0-fabs(Imu.PitchAngle)/600.0f;//+rc_ctrl.rc.ch[4]*0.1f/660.0f;//+0.045f+stand_flag*0.045f;;
 				if(chassis_state==5)
 						lt=0.1f;
 				if(chassis_state==7)
 						lt=0.12f;				
 				if(Chassis.Mode==ROTING)
 				{	
-						Chassis.wz=0;			
-						turn_x=ROTING_SPEED*0.1f;
+						if(fabs(Chassis.wz)<ROTING_SPEED)
+								Chassis.wz+=ROTING_SPEED*0.01f;
+						turn_x=Chassis.wz*0.001f;
 				}
 				if(Chassis.Mode==FALLOW||Chassis.Mode==JUMP)
 				{
 						follow_angle=loop_fp32_constrain(FALLOW_angle, YawMotorMeasure.angle - 180.0f,YawMotorMeasure.angle + 180.0f);
 						Chassis.wz=0;//-PID_calc(&follow_pid,YawMotorMeasure.angle,follow_angle)*3.14159f/180.0f;					
 						turn_x=-(follow_angle-YawMotorMeasure.angle)*3.14159f/180.0f;
-						if(turn_x>0.5f)	turn_x=0.5f;
-						if(turn_x<-0.5f)	turn_x=-0.5f;		
+						if(turn_x>0.6f)	turn_x=0.6f;
+						if(turn_x<-0.6f)	turn_x=-0.6f;		
+						Chassis.wz=turn_x*4.5f;
 				}
 				if(Chassis.Mode==STOP)
 				{
 						follow_angle=loop_fp32_constrain(FALLOW_angle+90.0f, YawMotorMeasure.angle - 180.0f,YawMotorMeasure.angle + 180.0f);
 						Chassis.wz=0;//-PID_calc(&follow_pid,YawMotorMeasure.angle,follow_angle)*3.14159f/180.0f;				
 						turn_x=-(follow_angle-YawMotorMeasure.angle)*3.14159f/180.0f;		
-						if(turn_x>0.5f)	turn_x=0.5f;
-						if(turn_x<-0.5f)	turn_x=-0.5f;					
+						if(turn_x>0.6f)	turn_x=0.6f;
+						if(turn_x<-0.6f)	turn_x=-0.6f;			
+						Chassis.wz=turn_x*4.5f;
 				}
 				//wz_current=PID_calc(&turn_pid,-(RightFootMotorMeasure.speed_rpm+LeftFootMotorMeasure.speed_rpm)*0.00136f,-Chassis.wz);	
 				
-				float len=(Imu.RollAngle*3.14/180)*ROLL_KP+i_rollangle*ROLL_KI-Imu.RollSpeed*3.14/180*ROLL_KD;
+				float len=(Imu.RollAngle*3.14/180)*ROLL_KP+i_rollangle-Imu.RollSpeed*3.14/180*ROLL_KD;
 				if(count1<=0&&count2<=0)
-						i_rollangle+=Imu.RollAngle*3.14/180;
+						i_rollangle+=Imu.RollAngle*3.14/180*ROLL_KI;
+
 				Leg_Force=len;
+				Pout=(Imu.RollAngle*3.14/180)*ROLL_KP;
+				Dout=Imu.RollSpeed*3.14/180*ROLL_KD;
 				if(fabs(len)>lt-0.11f)	
 				{
 						if(fabs(len)+0.11f>0.31f)	len=0.2f;
@@ -1055,6 +1089,7 @@ void Calculate_left()
 						F_left=(lt_left-l0)*LEG_KP+i_l0_left-(l0-l_l0_left)*LEG_KD;
 				else
 						F_left=(lt_left-l0)*LEG_KP_DOWN-(l0-l_l0_left)*LEG_KD_DOWN;
+				
 				if(Chassis.Mode!=JUMP&&Chassis.Mode!=ROTING&&Chassis.Mode!=NOFORCE)
 						i_l0_left+=(lt_left-l0)*LEG_KI;
 				if(i_l0_left<0)		i_l0_left=0;
@@ -1111,20 +1146,31 @@ float T_left_test,Tp_left_test,T_right_test,Tp_right_test,xt,dxt;
 
 void Calculate_Kp()
 {
-		dxt_left=Chassis.vx*0.45f;//+l0_left*arm_cos_f32(a_left)*da_left;
-		dxt_right=Chassis.vx*0.45f;//+l0_right*arm_cos_f32(a_right)*da_right;
+		dxt_left=Chassis.vx*0.15f;//+l0_left*arm_cos_f32(a_left)*da_left;
+		dxt_right=Chassis.vx*0.15f;//+l0_right*arm_cos_f32(a_right)*da_right;
 		xt_left+=Chassis.vx*0.001f;
 		xt_right+=Chassis.vx*0.001f;
-		x_left+=dx_left*0.001f;	
-		x_right+=dx_right*0.001f;	
+
 		first_order_filter_cali(&dxleft_filter,dx_left);
 		first_order_filter_cali(&dxright_filter,dx_right);
-		first_order_filter_cali(&xleft_filter,x_left);
-		first_order_filter_cali(&xright_filter,x_right);		
-		x=(xleft_filter.out+xright_filter.out)/2.0f;
+		if(fabs(dx_left)>fabs(dx_right))
+				dx=dx_right+Imu.YawSpeed/180*3.14159f*0.24f;
+		else
+				dx=dx_left-Imu.YawSpeed/180*3.14159f*0.24f;
 		dx=(dxleft_filter.out+dxright_filter.out)/2.0f;
+		dx=eVec[1];
 		xt=(xt_left+xt_right)/2.0f;
 		dxt=(dxt_left+dxt_right)/2.0f;
+//		if(xt+x+dx+Chassis.vx*0.5<-2.0f)
+//				xt=-2.0f-x-dx-Chassis.vx*0.5;
+//				
+//		if(xt+x+dx+Chassis.vx*0.5>2.0f)
+//				xt=2.0f-x-dx-Chassis.vx*0.5;	
+		x_left+=dx*0.001f;	
+		x_right+=dx*0.001f;		
+		first_order_filter_cali(&xleft_filter,x_left);
+		first_order_filter_cali(&xright_filter,x_right);	
+		x=(xleft_filter.out+xright_filter.out)/2.0f;	
 		if((count2>2||count1>2)&&Chassis.Mode!=JUMP)
 		{
 				T_left=0;
@@ -1141,14 +1187,14 @@ void Calculate_Kp()
 		else
 		{
 
-				T_left=-(Calc_Poly_extern(l0_left,0,0)*a_left+Calc_Poly_extern(l0_left,0,1)*da_left+Calc_Poly_extern(l0_left,0,4)*(x+xt)*(1-cal_flag)+Calc_Poly_extern(l0_left,0,5)*(dx+dxt)+Calc_Poly_extern(l0_left,0,8)*b_left+Calc_Poly_extern(l0_left,0,9)*db_left
-			+Calc_Poly_extern(l0_right,0,2)*a_right+Calc_Poly_extern(l0_right,0,3)*da_right+Calc_Poly_extern(l0_right,0,6)*(turn_x)*(1-cal_flag)+Calc_Poly_extern(l0_right,0,7)*(Imu.YawSpeed/180.0f*3.1415926f+Chassis.wz));
-				Tp_left=-(Calc_Poly_extern(l0_left,1,0)*a_left+Calc_Poly_extern(l0_left,1,1)*da_left+Calc_Poly_extern(l0_left,1,4)*(x+xt)*(1-cal_flag)+Calc_Poly_extern(l0_left,1,5)*(dx+dxt)+Calc_Poly_extern(l0_left,1,8)*b_left+Calc_Poly_extern(l0_left,1,9)*db_left
-			+Calc_Poly_extern(l0_right,1,2)*a_right+Calc_Poly_extern(l0_right,1,3)*da_right+Calc_Poly_extern(l0_right,1,6)*(turn_x)*(1-cal_flag)+Calc_Poly_extern(l0_right,1,7)*(Imu.YawSpeed/180.0f*3.1415926f+Chassis.wz));
-				T_right=-(Calc_Poly_extern(l0_left,2,0)*a_left+Calc_Poly_extern(l0_left,2,1)*da_left+Calc_Poly_extern(l0_left,2,4)*(x+xt)*(1-cal_flag)+Calc_Poly_extern(l0_left,2,5)*(dx+dxt)+Calc_Poly_extern(l0_right,2,8)*b_right+Calc_Poly_extern(l0_right,2,9)*db_right
-			+Calc_Poly_extern(l0_right,2,2)*a_right+Calc_Poly_extern(l0_right,2,3)*da_right+Calc_Poly_extern(l0_right,2,6)*(turn_x)*(1-cal_flag)+Calc_Poly_extern(l0_right,2,7)*(Imu.YawSpeed/180.0f*3.1415926f+Chassis.wz));
-				Tp_right=-(Calc_Poly_extern(l0_left,3,0)*a_left+Calc_Poly_extern(l0_left,3,1)*da_left+Calc_Poly_extern(l0_left,3,4)*(x+xt)*(1-cal_flag)+Calc_Poly_extern(l0_left,3,5)*(dx+dxt)+Calc_Poly_extern(l0_right,3,8)*b_right+Calc_Poly_extern(l0_right,3,9)*db_right
-			+Calc_Poly_extern(l0_right,3,2)*a_right+Calc_Poly_extern(l0_right,3,3)*da_right+Calc_Poly_extern(l0_right,3,6)*(turn_x)*(1-cal_flag)+Calc_Poly_extern(l0_right,3,7)*(Imu.YawSpeed/180.0f*3.1415926f+Chassis.wz));
+				T_left=-(Calc_Poly_extern(l0_left,0,0)*a_left+Calc_Poly_extern(l0_left,0,1)*da_left+Calc_Poly_extern(l0_left,0,4)*(x+xt)+Calc_Poly_extern(l0_left,0,5)*(dx+dxt)+Calc_Poly_extern(l0_left,0,8)*b_left+Calc_Poly_extern(l0_left,0,9)*db_left
+			+Calc_Poly_extern(l0_right,0,2)*a_right+Calc_Poly_extern(l0_right,0,3)*da_right+Calc_Poly_extern(l0_right,0,6)*(turn_x)+Calc_Poly_extern(l0_right,0,7)*(Imu.YawSpeed/180.0f*3.1415926f+Chassis.wz));
+				Tp_left=-(Calc_Poly_extern(l0_left,1,0)*a_left+Calc_Poly_extern(l0_left,1,1)*da_left+Calc_Poly_extern(l0_left,1,4)*(x+xt)+Calc_Poly_extern(l0_left,1,5)*(dx+dxt)+Calc_Poly_extern(l0_left,1,8)*b_left+Calc_Poly_extern(l0_left,1,9)*db_left
+			+Calc_Poly_extern(l0_right,1,2)*a_right+Calc_Poly_extern(l0_right,1,3)*da_right+Calc_Poly_extern(l0_right,1,6)*(turn_x)+Calc_Poly_extern(l0_right,1,7)*(Imu.YawSpeed/180.0f*3.1415926f+Chassis.wz));
+				T_right=-(Calc_Poly_extern(l0_left,2,0)*a_left+Calc_Poly_extern(l0_left,2,1)*da_left+Calc_Poly_extern(l0_left,2,4)*(x+xt)+Calc_Poly_extern(l0_left,2,5)*(dx+dxt)+Calc_Poly_extern(l0_right,2,8)*b_right+Calc_Poly_extern(l0_right,2,9)*db_right
+			+Calc_Poly_extern(l0_right,2,2)*a_right+Calc_Poly_extern(l0_right,2,3)*da_right+Calc_Poly_extern(l0_right,2,6)*(turn_x)+Calc_Poly_extern(l0_right,2,7)*(Imu.YawSpeed/180.0f*3.1415926f+Chassis.wz));
+				Tp_right=-(Calc_Poly_extern(l0_left,3,0)*a_left+Calc_Poly_extern(l0_left,3,1)*da_left+Calc_Poly_extern(l0_left,3,4)*(x+xt)+Calc_Poly_extern(l0_left,3,5)*(dx+dxt)+Calc_Poly_extern(l0_right,3,8)*b_right+Calc_Poly_extern(l0_right,3,9)*db_right
+			+Calc_Poly_extern(l0_right,3,2)*a_right+Calc_Poly_extern(l0_right,3,3)*da_right+Calc_Poly_extern(l0_right,3,6)*(turn_x)+Calc_Poly_extern(l0_right,3,7)*(Imu.YawSpeed/180.0f*3.1415926f+Chassis.wz));
 
 //				T_left=-(Calc_Poly(l0_left,0,0)*a_left+Calc_Poly(l0_left,0,1)*da_left+Calc_Poly(l0_left,0,2)*(x+xt_left)*(1-cal_flag)+Calc_Poly(l0_left,0,3)*(dx+Chassis.vx*0.5)+Calc_Poly(l0_left,0,4)*b_left+Calc_Poly(l0_left,0,5)*db_left);
 //				Tp_left=-(Calc_Poly(l0_left,1,0)*a_left+Calc_Poly(l0_left,1,1)*da_left+Calc_Poly(l0_left,1,2)*(x+xt_left)*(1-cal_flag)+Calc_Poly(l0_left,1,3)*(dx+Chassis.vx*0.5)+Calc_Poly(l0_left,1,4)*b_left+Calc_Poly(l0_left,1,5)*db_left);
@@ -1161,4 +1207,82 @@ void Calculate_Kp()
 		T_right1=-(ja_right*F_right+jb_right*Tp_right)/9.1f;
 		T_right2=-(jc_right*F_right+jd_right*Tp_right)/9.1f;
 
+}
+
+// x = 
+//   |  velocity  |
+//   |acceleration|
+
+KalmanFilter_t Height_KF;
+float P_Init[4] =
+        {
+            1,		0,
+						0,		1
+        };
+float F_Init[4] =
+        {
+              1,		0.001f,
+							0,				1
+        }; 
+float Q_Init[4] =
+        {
+              0.5*0.001*0.001*0.001,			0.5*0.001*0.001,
+							0.001*0.001,								0.001
+        };
+float R_Init[1] =
+        {
+             1000
+        }; 
+float H_Init[2] =
+        {
+            0,          1
+        };    
+float B_Init[2] =
+        {
+            0.001*0.001*0.5,          0.001
+        };   	
+float K_Init[2] =
+        {
+             0,         0
+        };   				
+void Height_KF_Init(void)
+{
+		
+			
+    // 设置最小方差
+    static float state_min_variance[1] = {0.0};
+    
+    // 开启自动调整
+    Height_KF.UseAutoAdjustment = 0;
+    
+    static uint8_t measurement_reference[1] = {1};
+    
+    static float measurement_degree[1] = {1};
+    // 根据measurement_reference与measurement_degree生成H矩阵如下
+    //（在当前周期全部测量数据有效情况下）
+    //| 1 0 0 |
+    //| 1 0 0 |
+    //| 0 0 1 |
+    
+    static float mat_R_diagonal_elements[1] = {1};
+    //根据mat_R_diagonal_elements生成R矩阵如下
+    //（在当前周期全部测量数据有效情况下）
+    //| 30 0 0 |
+    //| 0 25 0 |
+    //| 0 0 35 |
+
+		
+    // 设置矩阵值
+
+    Kalman_Filter_Init(&Height_KF, 2, 1, 1,Q_Init,R_Init,P_Init,K_Init);
+    memcpy(Height_KF.MeasurementMap, measurement_reference, sizeof(measurement_reference));
+    memcpy(Height_KF.MeasurementDegree, measurement_degree, sizeof(measurement_degree));
+    memcpy(Height_KF.MatR_DiagonalElements, mat_R_diagonal_elements, sizeof(mat_R_diagonal_elements));
+    memcpy(Height_KF.StateMinVariance, state_min_variance, sizeof(state_min_variance));       
+    memcpy(Height_KF.P_data, P_Init, sizeof(P_Init));
+    memcpy(Height_KF.F_data, F_Init, sizeof(F_Init));
+    memcpy(Height_KF.Q_data, Q_Init, sizeof(Q_Init));
+		memcpy(Height_KF.R_data, R_Init, sizeof(R_Init));
+		memcpy(Height_KF.H_data, H_Init, sizeof(H_Init));
+		memcpy(Height_KF.B_data, B_Init, sizeof(B_Init));		
 }

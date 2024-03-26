@@ -76,14 +76,14 @@ const osTimerAttr_t testTimer_attributes = {
 osTimerId_t CalculateThreadHandle;
 const osThreadAttr_t CalculateThread_attributes = {
   .name = "CalculateThread",
-  .stack_size = 128 * 8,
+  .stack_size = 128 * 16,
   .priority = (osPriority_t) osPriorityHigh,
 };
 
 osTimerId_t AttitudeThreadHandle;
 const osThreadAttr_t AttitudeThread_attributes = {
   .name = "AttitudeThread",
-  .stack_size = 128 * 4,
+  .stack_size = 128 * 8,
   .priority = (osPriority_t) osPriorityRealtime,
 };
 
@@ -98,15 +98,15 @@ const osThreadAttr_t UIThread_attributes = {
 osTimerId_t RefereeThreadHandle;
 const osThreadAttr_t RefereeThread_attributes = {
   .name = "RefereeThread",
-  .stack_size = 128 * 4,
+  .stack_size = 128 * 8,
   .priority = (osPriority_t) osPriorityNormal,
 };
 
 osTimerId_t CanSendThreadHandle;
 const osThreadAttr_t CanSendThread_attributes = {
   .name = "CanSendThread",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 128 * 8,
+  .priority = (osPriority_t) osPriorityRealtime,
 };
 
 /* USER CODE END FunctionPrototypes */
