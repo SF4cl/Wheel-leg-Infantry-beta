@@ -39,8 +39,8 @@
 
 #define IMU_GYRO_YAW_BIAS    													-0.00465f
 
-#define FALLOW_ANGLE              										66.0f
-#define ROTING_SPEED																	5.0f
+#define FALLOW_ANGLE              										-72.0f
+#define ROTING_SPEED																	4.5f
 
 #define TORQUE_K																			2730.0f
 #define TORQUE_W																			0.754f
@@ -54,9 +54,7 @@
 #define TURN_KI																				0.0f
 #define TURN_KD																				10000.0f
 
-#define ROLL_KP																				0.24f
-#define ROLL_KI																				0.000f
-#define ROLL_KD																				0.00f
+
 
 
 

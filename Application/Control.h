@@ -15,7 +15,8 @@
 #include "user_lib.h"
 #include "stm32h7xx_it.h"
 #include "CanPacket.h"
-
+#include "kalman filter.h"
+#include "QuaternionEKF.h"
 typedef enum{
 	LEFT1,
 	LEFT2,
@@ -24,6 +25,7 @@ typedef enum{
 }ID;
 
 extern first_order_filter_type_t xleft_filter,xright_filter,dxleft_filter,dxright_filter;
+extern KalmanFilter_t Height_KF;
 extern float T_left1,T_left2,T_right1,T_right2,T_right,T_left,T_left1_r,T_left2_r,T_right1_r,T_right2_r;
 extern float a_right,da_right,x_right,dx_right,b_right,db_right,last_a_right,a_left,da_left,x_left,dx_left,b_left,db_left,last_a_left;
 extern float T,Tp_left,Tp_right,N,P,Nm,Pm,R,g,L,Lm,l,mw,mp,M,Iw,Ip,Im;	
@@ -42,4 +44,6 @@ extern void Change(float pos,ID id);
 extern void Calculate_right(void);
 extern void Calculate_left(void);
 extern void Calculate_Kp(void);
+extern void Height_KF_Init(void);
+
 #endif
