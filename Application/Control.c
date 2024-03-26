@@ -10,7 +10,7 @@ float LEG_KP	=																			1200.0f;
 float LEG_KI	=																			0.25f;
 float LEG_KD	=																			7500.0f;
 float ROLL_KP	=																			0.25f;
-float ROLL_KI	=																			0.0025f;
+float ROLL_KI	=																			0.00025f;
 float ROLL_KD	=																			0.003f;
 																				
 float LEG_KP_DOWN	=																			1000.0f;
