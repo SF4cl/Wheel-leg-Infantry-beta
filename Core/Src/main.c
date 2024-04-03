@@ -38,6 +38,7 @@
 #include "joint_motor.h"
 #include "MahonyAHRS.h"
 #include "RefereeBehaviour.h"
+#include "RefereeThread.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -181,6 +182,8 @@ int main(void)
   HAL_UART_Receive_DMA(&huart2,Usart2Type.RX_pData,RECEIVE_SIZE);//开启串口DMA接收	
 	__HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);  //开启空闲中断
   HAL_UART_Receive_DMA(&huart3,Usart3Type.RX_pData,RECEIVE_SIZE);//开启串口DMA接收	
+	__HAL_UART_ENABLE_IT(&huart5, UART_IT_IDLE);  //开启空闲中断
+	HAL_UART_Receive_DMA(&huart5,usart5_buf1,USART_RX_BUF_LENGHT);//开启串口DMA接收	
 	
 	//adc Calibration
 	HAL_Delay(10);	

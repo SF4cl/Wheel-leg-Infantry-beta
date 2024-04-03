@@ -10,7 +10,7 @@ typedef enum
 {
 	DefaultAimStatusAndTargetId = 0x106,
 	SentryAimStatusAndTargetId = 0x107,
-	DefaulPTZRequestAndStatusId = 0x110,
+	DefaulPTZRequestAndStatusId = 0x0f0,
 	SentryPTZRequestAndStatusId = 0x111,
 }CanReceive_e;
 

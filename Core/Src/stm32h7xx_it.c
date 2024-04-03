@@ -582,7 +582,8 @@ void UART5_IRQHandler(void)
     { 
 
 				__HAL_UART_CLEAR_IDLEFLAG(&huart5);//清楚标志位
-				__HAL_DMA_DISABLE(&hdma_uart5_rx);
+        __HAL_DMA_DISABLE(&hdma_uart5_rx);
+			  //HAL_UART_DMAStop(&huart5); 
 				uint8_t temp=__HAL_DMA_GET_COUNTER(&hdma_uart5_rx);                
 
 				usart5_rx_len=USART_RX_BUF_LENGHT-temp; 

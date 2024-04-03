@@ -86,7 +86,7 @@ void referee_data_solve(uint8_t *frame)
         case GAME_STATE_CMD_ID:
         {
             memcpy(&game_state, frame + index, sizeof(ext_game_state_t));
-						EnQueue(&SendBuffer[0], send_game_status(),11);
+						//EnQueue(&SendBuffer[0], send_game_status(),11);
         }
         break;
         case GAME_RESULT_CMD_ID:
@@ -97,7 +97,7 @@ void referee_data_solve(uint8_t *frame)
         case GAME_ROBOT_HP_CMD_ID:
         {
             memcpy(&game_robot_HP_t, frame + index, sizeof(ext_game_robot_HP_t));
-						EnQueue(&SendBuffer[1], send_enemy_information(),11);
+						//EnQueue(&SendBuffer[1], send_enemy_information(),11);
         }
         break;
         case FIELD_EVENTS_CMD_ID:

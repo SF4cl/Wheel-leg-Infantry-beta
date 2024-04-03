@@ -4,13 +4,13 @@
 #define printf(...)  HAL_UART_Transmit_DMA(&huart1,\
 																				(uint8_t  *)u1_buf,\
 																				sprintf((char*)u1_buf,__VA_ARGS__))
-uint8_t u1_buf[29] __attribute__((section(".ARM.__at_0x24000320")));
+uint8_t u1_buf[29] ;//__attribute__((section(".ARM.__at_0x24000320")));
 
 float LEG_KP	=																			1200.0f;
 float LEG_KI	=																			0.25f;
 float LEG_KD	=																			7500.0f;
 float ROLL_KP	=																			0.25f;
-float ROLL_KI	=																			0.0025f;
+float ROLL_KI	=																			0.00001;
 float ROLL_KD	=																			0.003f;
 																				
 float LEG_KP_DOWN	=																			1000.0f;
@@ -61,46 +61,46 @@ float Control_Kp[6][2][4]={
 60.986917,-63.118414,23.947251,-0.781886
 };
 float Control_K_extern[10][4][4]={
--91.810700,97.152739,-67.227130,-1.714506,
-179.956346,-150.313934,97.519631,3.558502,
--95.140145,109.912337,-51.046381,-2.225587,
-98.119010,-59.507741,-59.815413,5.780475,
-5.617316,-6.717140,-1.096274,-0.417132,
--14.960887,19.064421,-1.726242,1.060605,
-6.624465,-4.247575,-0.902625,-0.273616,
-8.131757,-12.335039,-0.872065,0.022717,
--95.140145,109.912337,-51.046381,-2.225587,
-98.119010,-59.507741,-59.815413,5.780475,
--91.810700,97.152739,-67.227130,-1.714506,
-179.956346,-150.313934,97.519631,3.558502,
-6.624465,-4.247575,-0.902625,-0.273616,
-8.131757,-12.335039,-0.872065,0.022717,
-5.617316,-6.717140,-1.096274,-0.417132,
--14.960887,19.064421,-1.726242,1.060605,
--64.364099,66.779623,-25.292883,-4.133859,
--31.288082,69.432380,-48.215991,14.335479,
--64.364099,66.779623,-25.292883,-4.133859,
--31.288082,69.432380,-48.215991,14.335479,
--25.734317,32.239707,-15.758358,-4.485949,
--59.863920,85.981660,-48.074542,12.868700,
--25.734317,32.239707,-15.758358,-4.485949,
--59.863920,85.981660,-48.074542,12.868700,
--20.015419,18.075237,-8.523384,11.063192,
-127.539503,-116.014416,45.424926,4.849524,
-20.015419,-18.075237,8.523384,-11.063192,
--127.539503,116.014416,-45.424926,-4.849524,
--14.940592,13.393391,-6.618381,8.022968,
-95.103368,-86.906617,35.779035,3.645579,
-14.940592,-13.393391,6.618381,-8.022968,
--95.103368,86.906617,-35.779035,-3.645579,
--54.898798,114.597884,-77.829800,22.964571,
-416.172989,-430.513188,162.581585,25.896337,
--54.898798,114.597884,-77.829800,22.964571,
-416.172989,-430.513188,162.581585,25.896337,
--33.043265,39.881187,-19.729456,5.143161,
-105.829692,-104.660025,37.796751,2.476416,
--33.043265,39.881187,-19.729456,5.143161,
-105.829692,-104.660025,37.796751,2.476416
+-67.270972,77.574159,-61.772440,-0.785361,
+224.349362,-199.026166,109.826109,2.325086,
+-83.651087,101.317203,-42.929088,-1.492395,
+119.836420,-79.303990,-48.286455,4.544351,
+5.597439,-6.453208,-1.168027,-0.287748,
+-11.020674,13.816400,0.126554,0.775860,
+5.034855,-2.370359,-0.930273,-0.192088,
+9.349710,-12.517249,-0.724275,0.067393,
+-83.651087,101.317203,-42.929088,-1.492395,
+119.836420,-79.303990,-48.286455,4.544351,
+-67.270972,77.574159,-61.772440,-0.785361,
+224.349362,-199.026166,109.826109,2.325086,
+5.034855,-2.370359,-0.930273,-0.192088,
+9.349710,-12.517249,-0.724275,0.067393,
+5.597439,-6.453208,-1.168027,-0.287748,
+-11.020674,13.816400,0.126554,0.775860,
+-44.324311,50.538728,-21.151939,-2.101087,
+18.985672,16.366533,-27.531946,10.866202,
+-44.324311,50.538728,-21.151939,-2.101087,
+18.985672,16.366533,-27.531946,10.866202,
+-19.814124,28.241632,-14.900259,-2.484392,
+-7.290041,33.425136,-28.987045,9.985134,
+-19.814124,28.241632,-14.900259,-2.484392,
+-7.290041,33.425136,-28.987045,9.985134,
+-19.258548,19.422591,-10.374911,8.011694,
+132.612223,-125.492808,49.044544,2.982977,
+19.258548,-19.422591,10.374911,-8.011694,
+-132.612223,125.492808,-49.044544,-2.982977,
+-14.382475,14.373318,-8.056392,5.867192,
+98.462741,-93.455054,38.075696,2.352106,
+14.382475,-14.373318,8.056392,-5.867192,
+-98.462741,93.455054,-38.075696,-2.352106,
+26.334803,29.155887,-44.643833,17.408617,
+287.413200,-326.127230,135.938071,13.079352,
+26.334803,29.155887,-44.643833,17.408617,
+287.413200,-326.127230,135.938071,13.079352,
+-15.386474,20.496695,-11.573360,3.525539,
+70.234251,-73.204798,28.307253,0.200629,
+-15.386474,20.496695,-11.573360,3.525539,
+70.234251,-73.204798,28.307253,0.200629
 };
 /*
 0.814631,17.776696,-49.716597,0.451368,
@@ -208,11 +208,11 @@ first_order_filter_type_t aleft_filter,aright_filter,daleft_filter,daright_filte
 first_order_filter_type_t u1_right_filter,u4_right_filter,u1_left_filter,u4_left_filter;
 first_order_filter_type_t du1_right_filter,du4_right_filter,du1_left_filter,du4_left_filter;
 first_order_filter_type_t xleft_filter,xright_filter,dxleft_filter,dxright_filter;
-fp32 paramater0[1]={0.002};	
+fp32 paramater0[1]={0.003};	
 fp32 paramater1[1]={0.005};	 
 fp32 paramater2[1]={0.00};	
-fp32 paramater3[1]={0.00};	 
-fp32 paramater4[1]={0.000};	 
+fp32 paramater3[1]={0.01};	 
+fp32 paramater4[1]={0.002};	 
 fp32 paramater5[1]={0.1};
 fp32 paramater6[1]={0.0};	
 first_order_filter_type_t vxt_filter;
@@ -385,7 +385,7 @@ void ChassisStateUpdate()
 {
 		Imu.YawAngle=QEKF_INS.Yaw;	
 		Imu.PitchAngle=QEKF_INS.Pitch;
-		Imu.RollAngle=QEKF_INS.Roll;
+		Imu.RollAngle=QEKF_INS.Roll-3.0f;
 		Imu.YawSpeed=-GyroCorrected[2]/3.14159f*180.0f;	
 		Imu.PitchSpeed=GyroCorrected[1]/3.14159f*180.0f;
 		Imu.RollSpeed=-GyroCorrected[0]/3.14159f*180.0f;		
@@ -451,7 +451,7 @@ void ChassisStateUpdate()
 		last_dx_right=xright_filter.out;		
 		tic=(tic+1)%4;
 }
-uint32_t cou_time=0;
+uint32_t cou_time=1000;
 void ChassisModeUpdate()
 {
 		count_time[5]++;
@@ -478,7 +478,7 @@ void ChassisModeUpdate()
 				default:
 						break;
 		}	
-		if((Chassis.Mode==FALLOW||Chassis.Mode==STOP)&&last_state==ROTING&&((follow_angle-YawMotorMeasure.angle)>90.0f||(follow_angle-YawMotorMeasure.angle)<-90.0f))
+		if((Chassis.Mode==FALLOW||Chassis.Mode==STOP)&&last_state==ROTING&&((follow_angle-YawMotorMeasure.angle)>0.0f||(follow_angle-YawMotorMeasure.angle)<-60.0f))
 				Chassis.Mode=ROTING;
 //		if(rc_ctrl.rc.s[0]==1)
 //				if(rc_ctrl.rc.ch[4]!=660)0
@@ -495,17 +495,20 @@ void ChassisModeUpdate()
 				ticking+=0.0314*3;
 		else
 				ticking=0;
-		if(Chassis.Mode==NOFORCE||total_time[0]<=500||total_time[1]<=500||cou_time!=0)
+		if(cou_time==0)	Kalman_Filter_Update(&Height_KF);		
+		if(cou_time>=1)
+				cou_time--;
+				
+		if(Chassis.Mode==NOFORCE||total_time[0]<=500||total_time[1]<=500||cou_time!=0||total_time[4]<10)
 		{		
 				joint_motor_set_mode(mo);  
 				chassis_state=0;
-				if(last_state!=NOFORCE)
+				if(last_state!=NOFORCE&&cou_time==0)
 				{
 						Height_KF_Init();
-						cou_time=1000;
+						cou_time=3000;
 				}
-				if(cou_time>=1)
-						cou_time--;
+				last_state=NOFORCE;
 				//x_left=0;
 				//x_right=0;
 				//xt_left=0;
@@ -514,12 +517,12 @@ void ChassisModeUpdate()
 		else
 		{
 				joint_motor_set_mode(10);  
-				if(last_state==NOFORCE||last_state==HIGHSPEED&&Chassis.Mode!=HIGHSPEED||total_time[4]<10)
+				if(last_state==NOFORCE||last_state==HIGHSPEED&&Chassis.Mode!=HIGHSPEED)
 				{
 						chassis_state=1;
 						init_time=0;
 				}
-				if(chassis_state==1&&init_time>500&&total_time[4]>100)
+				if(chassis_state==1&&init_time>1000&&total_time[4]>10)
 				{
 						chassis_state=2;
 						x_left=0;
@@ -580,6 +583,7 @@ void ChassisModeUpdate()
 						chassis_state=3;
 						init_time=0;
 				}
+				last_state=Chassis.Mode;
 				
 //				if(chassis_state==7&&init_time>300)
 //				{
@@ -593,24 +597,33 @@ void ChassisModeUpdate()
 //				}
 		}
 		
-		last_state=Chassis.Mode;	
+	
 		
 		//Chassis.vx=rc_ctrl.rc.ch[1]*32767/660;
 		if(Chassis.Mode!=STOP)
 		{
 				first_order_filter_cali(&xt_filter,xt_filter.out-PTZ.FBSpeed/32767.0f*2.1f*0.1f);	
-				first_order_filter_cali(&vxt_filter,-PTZ.FBSpeed/32767.0f*2.0f);	
+				first_order_filter_cali(&vxt_filter,-PTZ.FBSpeed/32767.0f*1.5f);	
 		}
 		else
 		{
 				first_order_filter_cali(&xt_filter,xt_filter.out+PTZ.LRSpeed/32767.0f*2.1f*0.1f);	
-				first_order_filter_cali(&vxt_filter,PTZ.LRSpeed/32767.0f*2.0f);	
+				first_order_filter_cali(&vxt_filter,PTZ.LRSpeed/32767.0f*1.0f);	
 		}
-		if(PTZ.FBSpeed!=0)
+		if(PTZ.FBSpeed!=0||PTZ.LRSpeed!=0)
 		{
-				Chassis.vx+=vxt_filter.out/1000.0f;
-				if(Chassis.vx>1.8f)	Chassis.vx=1.8f;
-				if(Chassis.vx<-1.8f)	Chassis.vx=-1.8f;			
+				if(vxt_filter.out<0)
+						if(Chassis.vx>vxt_filter.out)
+								Chassis.vx+=vxt_filter.out/200.0f;	
+						else
+								Chassis.vx+=0.008f;
+				else
+						if(Chassis.vx<vxt_filter.out)
+								Chassis.vx+=vxt_filter.out/200.0f;	
+						else
+								Chassis.vx-=0.008f;								
+//				if(Chassis.vx<fabs(vxt_filter.out)&&Chassis.vx>-fabs(vxt_filter.out))
+//						Chassis.vx+=vxt_filter.out/200.0f;		
 		}
 		else
 				Chassis.vx*=0.95f;
@@ -700,7 +713,7 @@ void Calculate_LQR()
 				if(chassis_state>4)
 						init_time++;
 				if(chassis_state==3||chassis_state==7)
-						lt=lt0-fabs(Imu.PitchAngle)/600.0f;//+rc_ctrl.rc.ch[4]*0.1f/660.0f;//+0.045f+stand_flag*0.045f;;
+						lt=lt0;//-fabs(Imu.PitchAngle)/600.0f;//+rc_ctrl.rc.ch[4]*0.1f/660.0f;//+0.045f+stand_flag*0.045f;;
 				if(chassis_state==5)
 						lt=0.1f;
 				if(chassis_state==7)
@@ -708,7 +721,7 @@ void Calculate_LQR()
 				if(Chassis.Mode==ROTING)
 				{	
 						if(fabs(Chassis.wz)<ROTING_SPEED)
-								Chassis.wz+=ROTING_SPEED*0.01f;
+								Chassis.wz+=ROTING_SPEED*0.0025f;
 						turn_x=Chassis.wz*0.001f;
 				}
 				if(Chassis.Mode==FALLOW||Chassis.Mode==JUMP)
@@ -716,8 +729,8 @@ void Calculate_LQR()
 						follow_angle=loop_fp32_constrain(FALLOW_angle, YawMotorMeasure.angle - 180.0f,YawMotorMeasure.angle + 180.0f);
 						Chassis.wz=0;//-PID_calc(&follow_pid,YawMotorMeasure.angle,follow_angle)*3.14159f/180.0f;					
 						turn_x=-(follow_angle-YawMotorMeasure.angle)*3.14159f/180.0f;
-						if(turn_x>0.6f)	turn_x=0.6f;
-						if(turn_x<-0.6f)	turn_x=-0.6f;		
+						if(turn_x>0.8f)	turn_x=0.8f;
+						if(turn_x<-0.8f)	turn_x=-0.8f;		
 						Chassis.wz=turn_x*4.5f;
 				}
 				if(Chassis.Mode==STOP)
@@ -725,14 +738,14 @@ void Calculate_LQR()
 						follow_angle=loop_fp32_constrain(FALLOW_angle+90.0f, YawMotorMeasure.angle - 180.0f,YawMotorMeasure.angle + 180.0f);
 						Chassis.wz=0;//-PID_calc(&follow_pid,YawMotorMeasure.angle,follow_angle)*3.14159f/180.0f;				
 						turn_x=-(follow_angle-YawMotorMeasure.angle)*3.14159f/180.0f;		
-						if(turn_x>0.6f)	turn_x=0.6f;
-						if(turn_x<-0.6f)	turn_x=-0.6f;			
+						if(turn_x>0.5f)	turn_x=0.5f;
+						if(turn_x<-0.5f)	turn_x=-0.5f;			
 						Chassis.wz=turn_x*4.5f;
 				}
 				//wz_current=PID_calc(&turn_pid,-(RightFootMotorMeasure.speed_rpm+LeftFootMotorMeasure.speed_rpm)*0.00136f,-Chassis.wz);	
 				
 				float len=(Imu.RollAngle*3.14/180)*ROLL_KP+i_rollangle-Imu.RollSpeed*3.14/180*ROLL_KD;
-				if(count1<=0&&count2<=0)
+				if(count1<=0&&count2<=0&&Chassis.Mode!=ROTING)
 						i_rollangle+=Imu.RollAngle*3.14/180*ROLL_KI;
 
 				Leg_Force=len;
@@ -1158,7 +1171,7 @@ void Calculate_Kp()
 		else
 				dx=dx_left-Imu.YawSpeed/180*3.14159f*0.24f;
 		dx=(dxleft_filter.out+dxright_filter.out)/2.0f;
-		dx=eVec[1];
+		//dx=eVec[1];
 		xt=(xt_left+xt_right)/2.0f;
 		dxt=(dxt_left+dxt_right)/2.0f;
 //		if(xt+x+dx+Chassis.vx*0.5<-2.0f)
@@ -1231,7 +1244,7 @@ float Q_Init[4] =
         };
 float R_Init[1] =
         {
-             1000
+             100
         }; 
 float H_Init[2] =
         {
@@ -1244,13 +1257,14 @@ float B_Init[2] =
 float K_Init[2] =
         {
              0,         0
-        };   				
+        }; 
+float Q_m[4],F_m[4],P_m[4],R_m[1],H_m[2],B_m[2],K_m[2];				
 void Height_KF_Init(void)
 {
 		
 			
     // 设置最小方差
-    static float state_min_variance[1] = {0.0};
+    static float state_min_variance[2] = {0.005,0.1};
     
     // 开启自动调整
     Height_KF.UseAutoAdjustment = 0;
@@ -1274,12 +1288,12 @@ void Height_KF_Init(void)
 		
     // 设置矩阵值
 
-    Kalman_Filter_Init(&Height_KF, 2, 1, 1,Q_Init,R_Init,P_Init,K_Init);
+    Kalman_Filter_Init(&Height_KF, 2, 1, 1,NULL,NULL,P_m,NULL);
     memcpy(Height_KF.MeasurementMap, measurement_reference, sizeof(measurement_reference));
     memcpy(Height_KF.MeasurementDegree, measurement_degree, sizeof(measurement_degree));
     memcpy(Height_KF.MatR_DiagonalElements, mat_R_diagonal_elements, sizeof(mat_R_diagonal_elements));
     memcpy(Height_KF.StateMinVariance, state_min_variance, sizeof(state_min_variance));       
-    memcpy(Height_KF.P_data, P_Init, sizeof(P_Init));
+    memcpy(P_m, P_Init, sizeof(P_Init));
     memcpy(Height_KF.F_data, F_Init, sizeof(F_Init));
     memcpy(Height_KF.Q_data, Q_Init, sizeof(Q_Init));
 		memcpy(Height_KF.R_data, R_Init, sizeof(R_Init));

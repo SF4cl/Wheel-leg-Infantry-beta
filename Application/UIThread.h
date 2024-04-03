@@ -4,5 +4,10 @@
 
 
 
-void UIThread(void *argument);
+extern void UIGenerateThread(void *argument);
+extern void UISendThread(void *argument);
+
+
+
+
 #endif

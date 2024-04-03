@@ -36,7 +36,7 @@ void CanSendThread(void *argument)
 
 			SendLenth = DataBuffer[2];
 
-			//Can_Send(&hfdcan2,SendId,SendLenth,&DataBuffer[3]);
+			Can_Send(&hfdcan2,SendId,SendLenth,&DataBuffer[3]);
 		}
 
 		osDelay(1);

@@ -2784,14 +2784,14 @@
           <GroupName>Config</GroupName>
           <Files>
             <File>
-              <FileName>Setting.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Config\Setting.h</FilePath>
-            </File>
-            <File>
               <FileName>struct_typedef.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Config\struct_typedef.h</FilePath>
+            </File>
+            <File>
+              <FileName>Setting.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Config\Setting.h</FilePath>
             </File>
             <File>
               <FileName>CanPacket.h</FileName>

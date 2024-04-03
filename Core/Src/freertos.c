@@ -76,37 +76,44 @@ const osTimerAttr_t testTimer_attributes = {
 osTimerId_t CalculateThreadHandle;
 const osThreadAttr_t CalculateThread_attributes = {
   .name = "CalculateThread",
-  .stack_size = 128 * 16,
+  .stack_size = 128 * 32,
   .priority = (osPriority_t) osPriorityHigh,
 };
 
 osTimerId_t AttitudeThreadHandle;
 const osThreadAttr_t AttitudeThread_attributes = {
   .name = "AttitudeThread",
-  .stack_size = 128 * 8,
+  .stack_size = 128 * 24,
   .priority = (osPriority_t) osPriorityRealtime,
 };
 
-osTimerId_t UIThreadHandle;
-const osThreadAttr_t UIThread_attributes = {
-  .name = "UIThread",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityLow,
+osTimerId_t UISendThreadHandle;
+const osThreadAttr_t UISendThread_attributes = {
+  .name = "UISendThread",
+  .stack_size = 128 * 48,
+  .priority = (osPriority_t) osPriorityNormal,
 };
 
 
 osTimerId_t RefereeThreadHandle;
 const osThreadAttr_t RefereeThread_attributes = {
   .name = "RefereeThread",
-  .stack_size = 128 * 8,
+  .stack_size = 128 * 24,
   .priority = (osPriority_t) osPriorityNormal,
 };
 
 osTimerId_t CanSendThreadHandle;
 const osThreadAttr_t CanSendThread_attributes = {
   .name = "CanSendThread",
-  .stack_size = 128 * 8,
+  .stack_size = 128 * 24,
   .priority = (osPriority_t) osPriorityRealtime,
+};
+
+osTimerId_t UIGenerateThreadHandle;
+const osThreadAttr_t UIGenerateThread_attributes = {
+  .name = "UIGenerateThread",
+  .stack_size = 128 * 36,
+  .priority = (osPriority_t) osPriorityNormal,
 };
 
 /* USER CODE END FunctionPrototypes */
@@ -188,8 +195,11 @@ void MX_FREERTOS_Init(void) {
   /* creation of CanSendThread */
   CanSendThreadHandle = osThreadNew(CanSendThread, NULL, &AttitudeThread_attributes);	
 	
-	/* creation of UIThread */
-  //UIThreadHandle = osThreadNew(UIThread, NULL, &AttitudeThread_attributes);	
+	/* creation of UISendThread */
+  UISendThreadHandle = osThreadNew(UISendThread, NULL, &UISendThread_attributes);	
+	
+	/* creation of UIGenerateThread */
+  UIGenerateThreadHandle = osThreadNew(UIGenerateThread, NULL, &UIGenerateThread_attributes);		
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
