@@ -82,4 +82,5 @@ stm32h723vg/main.o: ..\Core\Src\main.c ..\Core\Inc\main.h \
   ..\Drivers\CMSIS\Include\cmsis_compiler.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\float.h \
   ..\algorithm\Mahony\MahonyAHRS.h ..\USER\RefereeBehaviour.h \
-  ..\Config\struct_typedef.h ..\Config\CanPacket.h
+  ..\Config\struct_typedef.h ..\Config\CanPacket.h \
+  ..\Application\RefereeThread.h ..\algorithm\fifo.h

@@ -191,7 +191,7 @@ void AttitudeThread(void *argument)
 				Height_KF.ControlVector[0]=accel_filter.out;			
 				//*(Height_KF.R.pData)=K1*Height_KF.MeasuredVector[0]*Height_KF.MeasuredVector[0];
 				if(time_count>1000)
-					Kalman_Filter_Update(&Height_KF);			
+						
 				time_count++;
 				
 				if(califlag)

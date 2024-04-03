@@ -22,6 +22,7 @@ void referee_unpack_fifo_data(void);
 
 uint8_t usart5_buf1[USART_RX_BUF_LENGHT] __attribute__((section(".ARM.__at_0x24000200")));
 uint8_t usart5_buf2[USART_RX_BUF_LENGHT] __attribute__((section(".ARM.__at_0x24000200")));
+uint8_t Info_Arr[256];
 uint8_t usart5_flag=1;
 
 fifo_s_t referee_fifo;
@@ -41,8 +42,6 @@ void RefereeThread(void * argument)
 	
     init_referee_struct_data();
     fifo_s_init(&referee_fifo, referee_fifo_buf, REFEREE_FIFO_BUF_LENGTH);
-		__HAL_UART_ENABLE_IT(&huart5, UART_IT_IDLE);  //开启空闲中断
-		HAL_UART_Receive_DMA(&huart5,usart5_buf1,USART_RX_BUF_LENGHT);//开启串口DMA接收	
 
     while(1)
     {

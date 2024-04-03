@@ -78,4 +78,4 @@ stm32h723vg/fdcan.o: ..\Core\Src\fdcan.c ..\Core\Inc\fdcan.h \
   ..\Drivers\A1Motor\struct_typedef.h ..\Drivers\A1Motor\transform.h \
   ..\Drivers\A1Motor\crc32.h ..\Drivers\A1Motor\movement_calc.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h \
-  ..\Drivers\A1Motor\crc32.h
+  ..\Drivers\A1Motor\crc32.h ..\Application\CalculateThread.h

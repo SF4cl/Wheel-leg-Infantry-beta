@@ -26,6 +26,7 @@
 #include "struct_typedef.h"
 #include "CanPacket.h"
 #include "Control.h"
+#include "CalculateThread.h"
 /* USER CODE END 0 */
 
 FDCAN_HandleTypeDef hfdcan1;
@@ -371,6 +372,10 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 									memcpy(&PTZ,RxData,sizeof(PTZ_t));
 									count_time[4]++;
 									break;
+							}
+							case 0x106:
+							{
+									memcpy(&Aim,RxData,sizeof(Aim));
 							}
 							default:
 							{

@@ -35,6 +35,7 @@ typedef struct
 
 extern Chassis_t Chassis;
 extern EulerSystemMeasure_t    Imu;
+extern Aim_t Aim;
 extern void CalculateThread(void *argument);
 
 

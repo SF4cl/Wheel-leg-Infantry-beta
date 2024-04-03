@@ -81,4 +81,4 @@ stm32h723vg/uithread.o: ..\Application\UIThread.c \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
   ..\Drivers\A1Motor\struct_typedef.h ..\Drivers\A1Motor\transform.h \
   ..\Drivers\A1Motor\crc32.h ..\Drivers\A1Motor\movement_calc.h \
-  ..\Drivers\A1Motor\crc32.h ..\Application\UIThread.h
+  ..\Drivers\A1Motor\crc32.h ..\Application\UIThread.h ..\Core\Inc\dma.h
